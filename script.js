@@ -154,8 +154,8 @@ function drawEyePosition(eye) {
   const context = canvas.getContext("2d");
 
   // 이미지의 중심이 눈의 위치에 오도록 조정
-  const eyeX = eye[0].x - eyeImage.width + 80;
-  const eyeY = eye[0].y - eyeImage.height / 2 + 10;
+  const eyeX = eye[0].x - eyeImage.width + 90;
+  const eyeY = eye[0].y - eyeImage.height / 2 + 20;
 
   // 이미지 그리기
   context.drawImage(eyeImage, eyeX, eyeY, eyeImage.width, eyeImage.height);
