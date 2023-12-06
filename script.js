@@ -16,18 +16,29 @@ function startVideo() {
 }
 
 video.addEventListener("play", () => {
+  // 기존 캔버스 (이미지용)
   const canvas = faceapi.createCanvasFromMedia(video);
   document.querySelector(".zonewrap").append(canvas);
+
+  // 새 캔버스 생성 (랜드마크용)
+  const landmarksCanvas = faceapi.createCanvasFromMedia(video);
+  document.querySelector(".faceLandmarks").append(landmarksCanvas);
+
   const displaySize = { width: video.width, height: video.height };
   faceapi.matchDimensions(canvas, displaySize);
+  faceapi.matchDimensions(landmarksCanvas, displaySize);
+
   setInterval(async () => {
     const detections = await faceapi
       .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
       .withFaceLandmarks()
       .withFaceExpressions();
     const resizedDetections = faceapi.resizeResults(detections, displaySize);
+
+    // 기존 캔버스에서 이미지 그리기 전에 캔버스 초기화
     canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
-    faceapi.draw.drawDetections(canvas, resizedDetections);
+
+    // faceapi.draw.drawDetections(canvas, resizedDetections);
     // faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
     // faceapi.draw.drawFaceExpressions(canvas, resizedDetections)
 
@@ -41,6 +52,12 @@ video.addEventListener("play", () => {
       // 눈의 위치와 얼굴 크기에 맞게 이미지 조절
       drawEyePosition(leftEye, rightEye, faceWidth, faceHeight);
     });
+
+    // 새 캔버스에서 랜드마크만 그리기
+    landmarksCanvas
+      .getContext("2d")
+      .clearRect(0, 0, landmarksCanvas.width, landmarksCanvas.height);
+    faceapi.draw.drawFaceLandmarks(landmarksCanvas, resizedDetections);
   }, 0);
 });
 
