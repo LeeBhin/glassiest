@@ -221,6 +221,8 @@ function getEyeCenter(eye) {
   return { x: centerX / eye.length, y: centerY / eye.length };
 }
 
+var success = true;
+var nowstatus = "";
 setInterval(async () => {
   const detections = await faceapi
     .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
@@ -233,10 +235,10 @@ setInterval(async () => {
     const faceCenterX = face.x + face.width / 2;
     const faceCenterY = face.y + face.height / 2;
 
-    let message = "";
+    let message = "좋아요!";
 
-    maxFaceSize = 200;
-    minFaceSize = 100;
+    maxFaceSize = 280;
+    minFaceSize = 120;
     threshold = 100;
 
     // 얼굴이 화면 중앙에 있는지 확인
@@ -244,9 +246,9 @@ setInterval(async () => {
       message = "조금 더 오른쪽으로 이동해보세요.";
     } else if (faceCenterX > screenCenterX + threshold) {
       message = "조금 더 왼쪽으로 이동해보세요.";
-    } else if (faceCenterY < screenCenterY - threshold) {
+    } else if (faceCenterY - 50 < screenCenterY - threshold) {
       message = "조금 더 아래쪽로 이동해보세요.";
-    } else if (faceCenterY > screenCenterY + threshold) {
+    } else if (faceCenterY + 50 > screenCenterY + threshold) {
       message = "조금 더 위쪽으로 이동해보세요.";
     }
 
@@ -257,9 +259,38 @@ setInterval(async () => {
       message = "너무 멀어요. 카메라에 조금 더 가까이 다가와주세요.";
     }
 
-    // 메시지 표시
-    if (!message == "") {
-      alert(message);
+    function showToast(position, icon, title, timer, toastStatus) {
+      Swal.fire({
+        position: position,
+        icon: icon,
+        title: title,
+        showConfirmButton: false,
+        timer: timer,
+        toast: toastStatus,
+      });
+    }
+
+    const statusMessages = {
+      right: "조금 더 오른쪽으로 이동해보세요.",
+      left: "조금 더 왼쪽으로 이동해보세요.",
+      up: "조금 더 위쪽으로 이동해보세요.",
+      down: "조금 더 아래쪽으로 이동해보세요.",
+      back: "너무 가까워요. 조금만 뒤로 물러나주세요.",
+      close: "너무 멀어요. 카메라에 조금 더 가까이 다가와주세요.",
+      good: "좋아요!",
+    };
+
+    let newStatus = Object.keys(statusMessages).find(
+      (key) => statusMessages[key] === message
+    );
+
+    if (newStatus && newStatus !== nowstatus) {
+      if (message == "좋아요!") {
+        showToast("bottom-end", "success", message, 10000, true);
+      } else {
+        showToast("bottom-end", "info", message, 10000, true);
+      }
+      nowstatus = newStatus;
     }
   }
 }, 100);
