@@ -248,7 +248,7 @@ setInterval(async () => {
       message = "조금 더 왼쪽으로 이동해보세요.";
     } else if (faceCenterY - 50 < screenCenterY - threshold) {
       message = "조금 더 아래쪽로 이동해보세요.";
-    } else if (faceCenterY + 50 > screenCenterY + threshold) {
+    } else if (faceCenterY + 30 > screenCenterY + threshold) {
       message = "조금 더 위쪽으로 이동해보세요.";
     }
 
