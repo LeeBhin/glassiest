@@ -4,7 +4,7 @@
   list-style: none;
 }
 
-canvas {
+.zonewrap canvas {
   position: absolute;
   top: 0;
   left: 0;
@@ -27,13 +27,6 @@ header {
   width: 70vw;
   background-color: lightblue;
   margin: 3vh auto;
-}
-
-.glass-type {
-  width: 10vw;
-  height: 20vh;
-  background: rgb(145, 124, 124);
-  float: left;
 }
 
 .ad_bar,
@@ -76,4 +69,39 @@ video {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.faceInfo {
+  float: right;
+  width: 18vw;
+  text-align: center;
+}
+
+#faceType {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+#explain {
+  font-size: 20px;
+}
+
+.faceLandmarks {
+  margin: 0 auto;
+  width: 15vw;
+  height: 15vw;
+  background: black;
+  overflow: hidden;
+}
+
+.faceLandmarks canvas {
+  transform: translate(-30%, -40%);
+  width: 35vw;
+}
+
+.glassType {
+  width: 15vw;
+  height: 27vh;
+  background: black;
+  float: left;
 }

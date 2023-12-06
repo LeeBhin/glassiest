@@ -43,7 +43,6 @@ video.addEventListener("play", () => {
     // faceapi.draw.drawFaceExpressions(canvas, resizedDetections)
 
     resizedDetections.forEach((detection) => {
-      // landmarks 객체가 있는지 확인
       const rightEye = detection.landmarks.getRightEye();
       const leftEye = detection.landmarks.getLeftEye();
       const faceWidth = detection.detection.box.width / 1.2;
@@ -85,14 +84,14 @@ async function init() {
 
   // Convenience function to setup a webcam
   const flip = true; // whether to flip the webcam
-  webcam = new tmImage.Webcam(10, 10, flip); // width, height, flip
+  webcam = new tmImage.Webcam(200, 200, flip); // width, height, flip
   await webcam.setup(); // request access to the webcam
   await webcam.play();
   window.requestAnimationFrame(loop);
 
   // append elements to the DOM
   document.getElementById("webcam-container").appendChild(webcam.canvas);
-  labelContainer = document.getElementById("label-container");
+  labelContainer = document.getElementById("faceType");
   for (let i = 0; i < maxPredictions; i++) {
     // and class labels
     labelContainer.appendChild(document.createElement("div"));
@@ -122,26 +121,27 @@ async function predict() {
     }
   }
 
-  // 클래스에 따라 결과 형식 변환
-  let formattedResult = "";
+  let explain = "";
   switch (predictedClass) {
-    case "각진":
-      formattedResult = "각진형";
+    case "각진형":
+      explain = `각진 얼굴형은 눈에 띄는 각진 턱과 넓은 이마가 특징적입니다. 이마, 볼, 턱선의 너비가 거의 비슷해 얼굴 전체적으로 강인한 인상을 줍니다. 직선적인 턱선은 이 얼굴형의 가장 두드러진 특징으로, 균형 잡힌 각진 모양을 보여줍니다.`;
       break;
-    case "둥근":
-      formattedResult = "둥근형";
+    case "둥근형":
+      explain = `둥근 얼굴형은 부드러운 윤곽과 둥근 턱이 특징입니다. 얼굴 길이와 너비가 비슷하며, 턱선이 부드럽게 곡선을 그려 볼이 도드라져 보일 수 있습니다. 이 얼굴형은 친근하고 부드러운 인상을 주는 것으로 알려져 있습니다.`;
       break;
-    case "긴":
-      formattedResult = "긴형";
+    case "긴형":
+      explain = `긴 얼굴형은 전체적으로 길쭉한 형태를 가지며, 이마, 볼, 턱의 너비가 비슷하게 나타납니다. 이 얼굴형은 종종 좁고 긴 이마와 턱을 가지고 있으며, 턱선이 덜 두드러질 수 있습니다. 긴 얼굴형은 세로 길이가 강조되는 특징을 가지고 있습니다.`;
       break;
-    // 추가적인 클래스에 대한 처리도 필요하다면 여기에 추가
-    default:
-      formattedResult = predictedClass;
+    case "달걀형":
+      explain = `달걀형 얼굴은 이마가 넓고 턱이 좁아지며, 전반적으로 균형 잡힌 비율을 가지고 있습니다. 얼굴 길이가 너비보다 길고, 턱선은 부드러운 곡선을 이룹니다. 이 얼굴형은 다양한 헤어스타일과 메이크업이 잘 어울리는 것으로 알려져 있습니다.`;
+      break;
+    case "하트형":
+      explain = `하트형 얼굴은 이마가 넓고 턱이 좁아지는 모양으로, 맨 위가 넓고 아래로 갈수록 좁아지는 하트 모양을 연상시킵니다. 특히 턱이 뾰족하게 나타나는 경우가 많으며, 볼은 상대적으로 더 둥근 형태를 보입니다. 이 얼굴형은 이마의 너비가 눈에 띄며, 턱선이 좁아지는 것이 특징입니다.`;
+      break;
   }
 
-  // 확률이 가장 높은 클래스 및 변환된 결과 표시
-  const classPrediction = formattedResult;
-  labelContainer.innerHTML = classPrediction;
+  labelContainer.innerText = predictedClass;
+  document.getElementById("explain").innerText = explain;
 }
 
 async function detectEyePositions() {
@@ -161,7 +161,7 @@ eyeImage.onload = function () {
 };
 
 function drawEyePosition(leftEye, rightEye, faceWidth, faceHeight) {
-  const canvas = document.querySelector("canvas");
+  const canvas = document.querySelector(".zonewrap canvas");
   const context = canvas.getContext("2d");
 
   // 스케일 계수 조정
@@ -220,3 +220,46 @@ function getEyeCenter(eye) {
   });
   return { x: centerX / eye.length, y: centerY / eye.length };
 }
+
+setInterval(async () => {
+  const detections = await faceapi
+    .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
+    .withFaceLandmarks();
+
+  if (detections.length > 0) {
+    const face = detections[0].detection.box;
+    const screenCenterX = video.width / 2;
+    const screenCenterY = video.height / 2;
+    const faceCenterX = face.x + face.width / 2;
+    const faceCenterY = face.y + face.height / 2;
+
+    let message = "";
+
+    maxFaceSize = 200;
+    minFaceSize = 100;
+    threshold = 100;
+
+    // 얼굴이 화면 중앙에 있는지 확인
+    if (faceCenterX < screenCenterX - threshold) {
+      message = "조금 더 오른쪽으로 이동해보세요.";
+    } else if (faceCenterX > screenCenterX + threshold) {
+      message = "조금 더 왼쪽으로 이동해보세요.";
+    } else if (faceCenterY < screenCenterY - threshold) {
+      message = "조금 더 아래쪽로 이동해보세요.";
+    } else if (faceCenterY > screenCenterY + threshold) {
+      message = "조금 더 위쪽으로 이동해보세요.";
+    }
+
+    // 얼굴이 카메라에 너무 가까운지 또는 멀리 있는지 확인
+    if (face.width > maxFaceSize) {
+      message = "너무 가까워요. 조금만 뒤로 물러나주세요.";
+    } else if (face.width < minFaceSize) {
+      message = "너무 멀어요. 카메라에 조금 더 가까이 다가와주세요.";
+    }
+
+    // 메시지 표시
+    if (!message == "") {
+      alert(message);
+    }
+  }
+}, 100);
