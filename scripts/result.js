@@ -1,9 +1,8 @@
-var preclass = sessionStorage.getItem("class")
-var explain = sessionStorage.getItem("explain")
+var preclass = sessionStorage.getItem("class");
+var explain = sessionStorage.getItem("explain");
 
-document.getElementById('faceType').innerHTML = preclass
-document.getElementById('explain').innerHTML = explain
-
+document.getElementById("faceType").innerHTML = preclass;
+document.getElementById("explain").innerHTML = explain;
 
 const video = document.getElementById("video");
 
@@ -71,7 +70,7 @@ let eyeImage = new Image();
 
 function imgselect(gsNum) {
   // 이미지를 미리 로드합니다.
-  eyeImage.src = `/pictures/${gsNum}.png`; // 원하는 이미지의 경로를 지정하세요.
+  eyeImage.src = gsNum; // 원하는 이미지의 경로를 지정하세요.
 
   eyeImage.onload = function () {
     // 이미지가 로드되면 크기를 설정합니다.
@@ -80,9 +79,43 @@ function imgselect(gsNum) {
   };
 }
 
-imgselect("각진형/brow1");
+function translateCS(CS) {
+  switch (CS) {
+    case "둥근형":
+      return "circle";
+    case "달걀형":
+      return "egg";
+    case "하트형":
+      return "heart";
+    case "긴형":
+      return "long";
+    case "각진형":
+      return "square";
+    default:
+      return CS;
+  }
+}
 
+function glasses_class(CS) {
+  translated = translateCS(CS);
+  const railDiv = document.querySelector(".rail");
+  const types = ["butt", "round", "sqr", "two", "well", "avi", "brow"];
 
+  for (let i = 1; i <= 5; i++) {
+    types.forEach((type) => {
+      const img = new Image();
+      img.src = `/pictures/${translated}/${type}${i}.png`;
+
+      img.onload = () => {
+        // 이미지가 성공적으로 불러와졌을 때, railDiv에 추가
+        railDiv.appendChild(img);
+        imgselect(img.src); ' '
+      };
+    });
+  }
+}
+
+glasses_class(preclass);
 
 function drawEyePosition(leftEye, rightEye, faceWidth, faceHeight) {
   const canvas = document.querySelector(".zonewrap canvas");
