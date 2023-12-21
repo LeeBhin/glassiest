@@ -8,10 +8,6 @@
   display: none;
 }
 
-body {
-  /* overflow: hidden;  */
-}
-
 img {
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -88,3 +84,10 @@ header {
   font-weight: bold;
 }
 
+.rail{
+  width: 100vw;
+  border: solid 1px;
+  position: absolute;
+  height: 250px;
+  bottom: 6%;
+}

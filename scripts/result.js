@@ -79,7 +79,10 @@ function imgselect(gsNum) {
     eyeImage.height = 90; // 원하는 높이
   };
 }
-imgselect("gs3");
+
+imgselect("각진형/brow1");
+
+
 
 function drawEyePosition(leftEye, rightEye, faceWidth, faceHeight) {
   const canvas = document.querySelector(".zonewrap canvas");

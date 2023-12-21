@@ -8,10 +8,6 @@
   display: none;
 }
 
-body {
-  /* overflow: hidden;  */
-}
-
 img {
   -webkit-user-select: none;
   -khtml-user-select: none;
