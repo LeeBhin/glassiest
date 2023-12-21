@@ -1,0 +1,142 @@
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  /* overflow: hidden;  */
+}
+
+img {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+}
+
+.zonewrap canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+header {
+  height: 80px;
+  padding: 20px;
+}
+
+.logo {
+  width: 300px;
+  margin: 0 auto;
+}
+
+.logo img {
+  width: 290px;
+  cursor: pointer;
+}
+
+.camZone {
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  width: 20vw;
+  height: 45vh;
+  overflow: hidden;
+  border: solid 5px;
+  transform: translate(-50%, -50%);
+}
+
+.zonewrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.home video {
+  transform: scaleX(-1);
+}
+
+.cheese {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 23px;
+  background: none;
+  padding: 20px 100px;
+  border: solid gray 2px;
+  color: gray;
+  cursor: not-allowed;
+  transition: 0.2s;
+}
+
+#clickable {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 23px;
+  background: none;
+  padding: 20px 100px;
+  border: solid black 2px;
+  color: black;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+#clickable:hover {
+  background-color: rgb(0, 0, 0);
+  color: white;
+  border-color: white;
+}
+
+.home {
+  width: 100vw;
+  overflow: scroll;
+  height: 100vh;
+  float: left;
+  position: relative;
+}
+
+.resultPage {
+  width: 100vw;
+  height: 100vh;
+  float: left;
+  position: relative;
+}
+
+.resultPage .camZone {
+  width: 20vw;
+  height: 45vh;
+  top: 35%;
+  left: 50%;
+}
+
+.faceLandmarks {
+  width: 20vw;
+  height: 45vh;
+  top: 35%;
+  left: 50%;
+}
+
+#capturedImage {
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+}
+
+.resultPage #explain {
+  width: 500px;
+}

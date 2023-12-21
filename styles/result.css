@@ -1,0 +1,90 @@
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  /* overflow: hidden;  */
+}
+
+img {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+}
+
+.zonewrap canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+header {
+  height: 80px;
+  padding: 20px;
+}
+
+.logo {
+  width: 300px;
+  margin: 0 auto;
+}
+
+.logo img {
+  width: 290px;
+  cursor: pointer;
+}
+
+.camZone {
+  position: absolute;
+  left: 30%;
+  top: 40%;
+  width: 20vw;
+  height: 45vh;
+  overflow: hidden;
+  border: solid 5px;
+  transform: translate(-50%, -50%);
+}
+
+.zonewrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.faceLandmarks {
+  width: 20vw;
+  height: 45vh;
+  top: 35%;
+  left: 50%;
+}
+
+#explain {
+  margin: 20px;
+  width: 600px;
+  position: absolute;
+  left: 41%;
+  top: 30%;
+  font-size: 30px;
+}
+
+#faceType{
+  margin: 20px;
+  position: absolute;
+  left: 41%;
+  top: 20%;
+  font-size: 40px;
+  font-weight: bold;
+}
+
