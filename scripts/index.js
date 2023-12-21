@@ -143,8 +143,8 @@ cheeseBtn.addEventListener("click", function () {
   if (trueFace) {
     sessionStorage.setItem("class",lastPredictedClass)
     sessionStorage.setItem("explain",lastexplain)
-    
-    // window.location.href = "result.html";
+
+    window.location.href = "/pages/result.html";
   }
 });
 
