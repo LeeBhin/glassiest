@@ -88,6 +88,12 @@ header {
   width: 100vw;
   border: solid 1px;
   position: absolute;
-  height: 250px;
-  bottom: 6%;
+  height: 300px;
+  bottom: 3%;
+}
+
+.rail img{
+  width: 300px;
+  margin: 10px;
+  cursor: pointer;
 }

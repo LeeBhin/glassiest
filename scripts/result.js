@@ -107,10 +107,13 @@ function glasses_class(CS) {
       img.src = `/pictures/${translated}/${type}${i}.png`;
 
       img.onload = () => {
-        // 이미지가 성공적으로 불러와졌을 때, railDiv에 추가
         railDiv.appendChild(img);
-        imgselect(img.src); ' '
+        imgselect(img.src);
       };
+
+      img.addEventListener("click", function () {
+        imgselect(this.src.replace(/^.*\/pictures/, "/pictures"));
+      });
     });
   }
 }
